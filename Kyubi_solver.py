@@ -11,7 +11,7 @@ colors = {
     'blue': ([85, 80, 100], [135, 255, 255]),     # Blue
     'yellow': ([26, 110, 117], [40, 255, 255]),   # Yellow
     'orange': ([8, 110, 125], [20, 255, 255]),    # Orange
-    'green' : ([40, 52, 72], [70, 255, 255]),     # Green
+    'green' : ([40, 52, 72], [80, 255, 255]),     # Green
     'red' : ([160, 100, 84], [179, 255, 255]),    # Red
 }
 
@@ -29,6 +29,8 @@ def detect_color(image, debug=False):
 
         if debug:
             print(f"{key} : {nonzero_normalized}")
+            cv2.imshow(key,np.hstack([image, output]))
+            cv2.waitKey(0)
 
         if nonzero_normalized > 0.3:
             return key[:1].upper()
@@ -106,7 +108,7 @@ def get_face_colors(file_path='data\\1\\U.jpeg', debug=False):
 
             face.append(detected_color)
         except:
-            print("something get wrong !")
+            print("something get wrong during detection !")
         finally:
             if debug:
                 print("")
