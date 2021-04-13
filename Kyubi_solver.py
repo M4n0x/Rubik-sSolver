@@ -27,13 +27,17 @@ def detect_color(image, debug=False):
         nonzero_normalized = np.count_nonzero(output) / output.size
 
         if debug:
-            print(f"{key} : {nonzero_normalized}")
-            cv2.imshow(key,np.hstack([image, output]))
-            cv2.waitKey(0)
+            pass
+            #cv2.imshow(key,np.hstack([image, output]))
+            #cv2.waitKey(0)
 
         if nonzero_normalized > 0.3:
+            if debug:
+                print(f"{key} detected : accuracy {int(nonzero_normalized*100)}%")
             return key[:1].upper()
-    
+
+    if debug:
+        print("no color detected")
     raise Exception("No color has been detected !")
 
 
@@ -107,7 +111,7 @@ def get_face_colors(image, debug=False):
     for (x1,y1,x2,y2,area) in list_pos:
         try:
             detected_color = detect_color(image[y1:y2, x1:x2], debug=debug)
-
+            cv2.rectangle(original, (x1,y1), (x2,y2), (0, 255, 0), 2)
             face.append(detected_color)
         except:
             if debug:
@@ -120,4 +124,4 @@ def get_face_colors(image, debug=False):
     if debug:
         print(f"Detected {face}")
 
-    return face
+    return (original, face)

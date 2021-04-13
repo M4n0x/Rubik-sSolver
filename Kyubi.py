@@ -7,9 +7,16 @@ for filename in os.listdir(directory):
     if filename.endswith(".jpeg"):
         file_path = os.path.join(directory, filename)
         #print(file_path, get_face_colors_from_file(file_path=file_path, debug=False))
-
-print(get_face_colors_from_file(file_path="data\\1\\R.jpeg", debug=False))
 '''
+
+
+frame, face = get_face_colors_from_file(file_path="data\\3\\img_3.jpg", debug=True)
+
+cv2.imshow("result", frame)
+cv2.waitKey(0)
+
+'''
+# VIDEO
 import cv2
 import time
 
@@ -35,3 +42,4 @@ while(True):
 # When everything done, release the capture
 cap.release()
 cv2.destroyAllWindows()
+'''
