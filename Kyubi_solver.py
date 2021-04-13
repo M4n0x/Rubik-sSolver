@@ -42,10 +42,13 @@ def apply_morph_operation(edges, type, size, it):
     n_edges = cv2.morphologyEx(edges, type, kernel, iterations=it)
     return n_edges
 
-def get_face_colors(file_path='data\\1\\U.jpeg', debug=False):
-    morph = []
-
+def get_face_colors_from_file(file_path, debug=False):
     image = cv2.imread(file_path)
+    return get_face_colors(image, debug)
+
+
+def get_face_colors(image, debug=False):
+    morph = []
 
     original = image.copy()
     image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
@@ -107,13 +110,14 @@ def get_face_colors(file_path='data\\1\\U.jpeg', debug=False):
 
             face.append(detected_color)
         except:
-            print("something get wrong during detection !")
+            if debug:
+                print("something get wrong during detection !")
         finally:
             if debug:
                 print("")
 
 
     if debug:
-        print(f"for file {file_path} detected {face}")
+        print(f"Detected {face}")
 
     return face
