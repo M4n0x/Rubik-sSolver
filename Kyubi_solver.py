@@ -1,6 +1,5 @@
-import cv2, sys, os
+import cv2
 import numpy as np
-from imutils import contours
 
 from matplotlib import pyplot as plt
 
