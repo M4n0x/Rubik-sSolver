@@ -79,7 +79,7 @@ cv2.destroyAllWindows()
 
 str_cube = ""
 
-if len(cube == 9): 
+if len(cube) == 6: 
     # swap faces to match solver pattern
     cube[2], cube[1] = cube[1], cube[2]
     cube[4], cube[5] = cube[5], cube[4]
