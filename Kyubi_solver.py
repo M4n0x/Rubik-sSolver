@@ -92,7 +92,7 @@ def get_face_colors(image, debug=False):
 
     contours, _ = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-    face = []
+    squares = []
 
     list_pos = list()
 
@@ -105,29 +105,14 @@ def get_face_colors(image, debug=False):
             x2,y2 = x1+w, y1+h
             area = w*h
 
-            TOLERANCE = 0.2
-
-            if (w/h > (1-TOLERANCE) and w/h < (1+TOLERANCE)):
-                list_pos.append((x1,y1,x2,y2,area))
-
-    # get rid of the big square if any 
-    if len(list_pos) > SIZE_CUBE**2:
-        list_pos = sorted(list_pos, key=lambda k: k[4], reverse=True)
-        list_pos.pop(0)
-
-    list_pos = sorted(list_pos, key=lambda k: k[1])
-
-    print("sorted y ", list_pos)
-
-    for i in range(0, len(list_pos), SIZE_CUBE):
-        list_pos[i:i+SIZE_CUBE]= sorted(list_pos[i:i+SIZE_CUBE], key=lambda k: k[0])
+            list_pos.append((x1,y1,x2,y2,area))
 
     for (x1,y1,x2,y2,area) in list_pos:
         try:
             cv2.rectangle(original, (x1,y1), (x2,y2), (125,125,125), 2)
             detected_color = detect_color(image[y1:y2, x1:x2], original[y1:y2, x1:x2], debug=debug)
             cv2.rectangle(original, (x1,y1), (x2,y2), labels_to_colors[detected_color], 2)
-            face.append(detected_color)
+            squares.append((x1,y1,detected_color))
         except:
             if debug:
                 print("something get wrong during detection !")
@@ -135,6 +120,14 @@ def get_face_colors(image, debug=False):
             if debug:
                 print("")
 
+### sort 
+
+    squares = sorted(squares, key=lambda k: k[1])
+
+    for i in range(0, len(squares), SIZE_CUBE):
+        squares[i:i+SIZE_CUBE]= sorted(squares[i:i+SIZE_CUBE], key=lambda k: k[0])
+
+    face = [k[2] for k in squares]
 
     if debug:
         print(f"Detected {face}")
