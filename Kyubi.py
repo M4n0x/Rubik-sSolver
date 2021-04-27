@@ -10,10 +10,10 @@ for filename in os.listdir(directory):
 '''
 
 
-frame, face = get_face_colors_from_file(file_path="data\\3\\img_3.jpg", debug=True)
+frame, face = get_face_colors_from_file(file_path="data\\webcam\\img_2_1332.jpg", debug=True)
+cv2.imshow('frame', frame)
+cv2.waitKey()
 
-cv2.imshow("result", frame)
-cv2.waitKey(0)
 
 '''
 # VIDEO
@@ -21,8 +21,10 @@ import cv2
 import time
 
 cap = cv2.VideoCapture(0)
-OFFSET_TIME = 5
+OFFSET_TIME = 0
 timeout = time.time() + OFFSET_TIME # + OFFSET_TIME secondes
+
+count = 1
 
 while(True):
     # Capture frame-by-frame
@@ -30,7 +32,10 @@ while(True):
     if (time.time() > timeout):
         ret, frame = cap.read()
 
-        get_face_colors(frame, debug=True)
+        cv2.imwrite(f"data\\webcam\\img_2_{count}.jpg", frame)
+        count += 1
+
+        frame, faces = get_face_colors(frame, debug=False)
 
         # Display the resulting frame
         cv2.imshow('frame', frame)

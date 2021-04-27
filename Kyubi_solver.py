@@ -1,17 +1,17 @@
 import cv2
 import numpy as np
-
 from matplotlib import pyplot as plt
 
 SIZE_CUBE = 3
 
 colors = {
-    'white': ([0, 0, 168], [172,100,255]),         # white
-    'blue': ([85, 80, 100], [135, 255, 255]),     # Blue
-    'yellow': ([26, 110, 117], [40, 255, 255]),   # Yellow
-    'orange': ([8, 110, 125], [20, 255, 255]),    # Orange
+    'white': ([0, 0, 168], [160, 200, 255]),        # White
+    'blue': ([85, 90, 100], [125, 255, 255]),     # Blue
+    'yellow': ([26, 110, 100], [40, 255, 255]),   # Yellow
+    'orange': ([7, 110, 125], [20, 255, 255]),    # Orange
     'green' : ([40, 52, 72], [80, 255, 255]),     # Green
     'red' : ([160, 100, 84], [179, 255, 255]),    # Red
+    'red2' : ([0, 100, 84], [6, 255, 255]),    # Red
 }
 
 labels_to_colors = {
@@ -23,7 +23,7 @@ labels_to_colors = {
     'R' : (20,20,255)
 }
 
-def detect_color(image, debug=False):
+def detect_color(image, origin, debug=False):
     for (key, (lower,upper)) in colors.items():
         # create NumPy arrays from the boundaries
         lower = np.array(lower, dtype = "uint8")
@@ -34,10 +34,10 @@ def detect_color(image, debug=False):
         output = cv2.bitwise_and(image, image, mask = mask)
 
         nonzero_normalized = np.count_nonzero(output) / output.size
-
+        
         if debug:
-            pass
-            #cv2.imshow(key,np.hstack([image, output]))
+            print(f"{key} accuracy : {int(nonzero_normalized*100)}, median : {cv2.mean(image)}")
+            #cv2.imshow(key,np.hstack([origin, output]))
             #cv2.waitKey(0)
 
         if nonzero_normalized > 0.3:
@@ -66,14 +66,14 @@ def get_face_colors(image, debug=False):
     original = image.copy()
     image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     imgray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    imgray = cv2.GaussianBlur(imgray,(11,11),2)
+    imgray = cv2.GaussianBlur(imgray,(13,13),10)
     edges = cv2.Canny(imgray,0,30)
 
     edges = apply_morph_operation(edges, cv2.MORPH_CLOSE, size=(5,5), it=1)
     morph.append(edges)
     edges = apply_morph_operation(edges, cv2.MORPH_DILATE, size=(4,4), it=5)
     morph.append(edges)
-    edges = apply_morph_operation(edges, cv2.MORPH_CLOSE, size=(6,6), it=10)
+    edges = apply_morph_operation(edges, cv2.MORPH_CLOSE, size=(6,6), it=8)
     morph.append(edges)
 
     offset = 1
@@ -114,12 +114,15 @@ def get_face_colors(image, debug=False):
 
     list_pos = sorted(list_pos, key=lambda k: k[1])
 
+    print("sorted y ", list_pos)
+
     for i in range(0, len(list_pos), SIZE_CUBE):
         list_pos[i:i+SIZE_CUBE]= sorted(list_pos[i:i+SIZE_CUBE], key=lambda k: k[0])
 
     for (x1,y1,x2,y2,area) in list_pos:
         try:
-            detected_color = detect_color(image[y1:y2, x1:x2], debug=debug)
+            cv2.rectangle(original, (x1,y1), (x2,y2), (125,125,125), 2)
+            detected_color = detect_color(image[y1:y2, x1:x2], original[y1:y2, x1:x2], debug=debug)
             cv2.rectangle(original, (x1,y1), (x2,y2), labels_to_colors[detected_color], 2)
             face.append(detected_color)
         except:
