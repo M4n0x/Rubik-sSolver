@@ -1,14 +1,16 @@
+''' 
+    Kyubi.py
+    Ce script permet de capturer une camera et d'effectuer la detection
+    des faces d'un rubiks cube
+    He-arc 2021, INF-DLMb
+    Maxime Welcklen & Steve Mendes Reis
+'''
+
 from Kyubi_solver import *
 from rubik_solver import utils
 import os 
 import keyboard
 from PIL import ImageFont, ImageDraw, Image
-
-'''
-cube = 'wrrbywbygobwyrggywrwygbrwboyorowrowboogyggbbyywgroorgb'
-print(utils.solve(cube, 'Kociemba'))
-exit()
-'''
 
 sequences = [
     ('U', "Face U(pper) : Show yellow center with blue one on your right"),
@@ -26,7 +28,7 @@ import cv2
 import time
 
 cap = cv2.VideoCapture(0)
-OFFSET_TIME = 0
+OFFSET_TIME = 0 # allow to take an image every X secondes (set to 0 to take as many images as possible)
 timeout = time.time() + OFFSET_TIME # + OFFSET_TIME secondes
 
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -39,23 +41,21 @@ iter_faces = iter(sequences)
 face_id, text = next(iter_faces)
 
 while(True):
-    # Capture frame-by-frame
-
     if (time.time() > timeout):
+        # Capture frame-by-frame
         ret, frame = cap.read()
 
         if not stop:
             analyse_frame, faces = get_face_colors(frame, debug=False)
             pil_im = Image.fromarray(analyse_frame)  
             draw = ImageDraw.Draw(pil_im)
-            draw.text((20,20), text, font=font, )
+            draw.text((20,20), text, font=font)
             
             draw.text((20,height-50), "Press q: quit, s: stop, c: continue, v: validate", font=font)
             cv2.imshow('frame', np.array(pil_im))
             cv2.waitKey(1)
-
-        # Display the resulting frame
-
+        
+        # managing key pressing
         if keyboard.is_pressed('q'):
             break
         elif keyboard.is_pressed('s'):
@@ -79,15 +79,16 @@ cv2.destroyAllWindows()
 
 str_cube = ""
 
-# swap faces to match solver pattern
-cube[2], cube[1] = cube[1], cube[2]
-cube[4], cube[5] = cube[5], cube[4]
-cube[3], cube[5] = cube[5], cube[3]
+if len(cube == 9): 
+    # swap faces to match solver pattern
+    cube[2], cube[1] = cube[1], cube[2]
+    cube[4], cube[5] = cube[5], cube[4]
+    cube[3], cube[5] = cube[5], cube[3]
 
-for face in cube:
-    for letter in face:
-        str_cube += letter
+    for face in cube:
+        for letter in face:
+            str_cube += letter
 
-print("cube :", str_cube)
+    print("cube :", str_cube)
 
-print("solution :", utils.solve(str_cube, 'Kociemba'))
+    print("solution :", utils.solve(str_cube, 'Kociemba'))
