@@ -16,11 +16,11 @@ colors = {
 
 labels_to_colors = {
     'W' : (255,255,255),
-    'B' : (8,69,201),
-    'Y' : (245,224,0),
-    'O' : (245,102,0),
-    'G' : (30,255,5),
-    'R' : (255,20,20)
+    'B' : (201,69,8),
+    'Y' : (0,224,245),
+    'O' : (0,102,245),
+    'G' : (5,255,30),
+    'R' : (20,20,255)
 }
 
 def detect_color(image, debug=False):
@@ -73,7 +73,7 @@ def get_face_colors(image, debug=False):
     morph.append(edges)
     edges = apply_morph_operation(edges, cv2.MORPH_DILATE, size=(4,4), it=5)
     morph.append(edges)
-    edges = apply_morph_operation(edges, cv2.MORPH_CLOSE, size=(7,7), it=10)
+    edges = apply_morph_operation(edges, cv2.MORPH_CLOSE, size=(6,6), it=10)
     morph.append(edges)
 
     offset = 1
