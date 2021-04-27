@@ -1,11 +1,14 @@
+from Kyubi_solver import *
 from rubik_solver import utils
 import os 
 import keyboard
 from PIL import ImageFont, ImageDraw, Image
 
-# cube = 'wowgybwyogygybyoggrowbrgywrborwggybrbwororbwborgowryby'
-
-# print(utils.solve(cube, 'Kociemba'))
+'''
+cube = 'wrrbywbygobwyrggywrwygbrwboyorowrowboogyggbbyywgroorgb'
+print(utils.solve(cube, 'Kociemba'))
+exit()
+'''
 
 sequences = [
     ('U', "Face U(pper) : Show yellow center with blue one on your right"),
@@ -66,14 +69,25 @@ while(True):
             try:
                 face_id, text = next(iter_faces)
             except StopIteration:
-                print('no more iter')
                 break
         
         timeout = time.time() + OFFSET_TIME # + next OFFSET_TIME secondes
 
-for face in cube:
-    print(face)
-
 # When everything done, release the capture
 cap.release()
 cv2.destroyAllWindows()
+
+str_cube = ""
+
+# swap faces to match solver pattern
+cube[2], cube[1] = cube[1], cube[2]
+cube[4], cube[5] = cube[5], cube[4]
+cube[3], cube[5] = cube[5], cube[3]
+
+for face in cube:
+    for letter in face:
+        str_cube += letter
+
+print("cube :", str_cube)
+
+print("solution :", utils.solve(str_cube, 'Kociemba'))
