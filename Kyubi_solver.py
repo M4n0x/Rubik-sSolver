@@ -1,17 +1,18 @@
 import cv2
 import numpy as np
+import statistics as stat
 from matplotlib import pyplot as plt
 
 SIZE_CUBE = 3
 
 colors = {
-    'white': ([0, 0, 168], [160, 200, 255]),        # White
-    'blue': ([85, 90, 100], [125, 255, 255]),     # Blue
-    'yellow': ([26, 110, 100], [40, 255, 255]),   # Yellow
     'orange': ([7, 110, 125], [20, 255, 255]),    # Orange
+    'yellow': ([26, 110, 100], [40, 255, 255]),   # Yellow
     'green' : ([40, 52, 72], [80, 255, 255]),     # Green
     'red' : ([160, 100, 84], [179, 255, 255]),    # Red
-    'red2' : ([0, 100, 84], [6, 255, 255]),    # Red
+    'red2' : ([0, 100, 84], [6, 255, 255]),       # Red
+    'white': ([0, 0, 168], [160, 200, 255]),      # White
+    'blue': ([85, 90, 100], [125, 255, 255]),     # Blue
 }
 
 labels_to_colors = {
@@ -97,7 +98,7 @@ def get_face_colors(image, debug=False):
     list_pos = list()
 
     for cnt in contours:
-        approx = cv2.approxPolyDP(cnt,0.09*cv2.arcLength(cnt,True),True) # permet de compter le nombre de côtés
+        approx = cv2.approxPolyDP(cnt,0.08*cv2.arcLength(cnt,True),True) # permet de compter le nombre de côtés
 
         if len(approx) == 4: #si on a 4 côtés c'est un rectangle on garde 
             rect = cv2.boundingRect(approx)
@@ -107,12 +108,17 @@ def get_face_colors(image, debug=False):
 
             list_pos.append((x1,y1,x2,y2,area))
 
+    median = 0 if (len(list_pos)==0) else stat.median([k[4] for k in list_pos])
+
     for (x1,y1,x2,y2,area) in list_pos:
         try:
-            cv2.rectangle(original, (x1,y1), (x2,y2), (125,125,125), 2)
+            #cv2.rectangle(original, (x1,y1), (x2,y2), (125,125,125), 2)
             detected_color = detect_color(image[y1:y2, x1:x2], original[y1:y2, x1:x2], debug=debug)
-            cv2.rectangle(original, (x1,y1), (x2,y2), labels_to_colors[detected_color], 2)
-            squares.append((x1,y1,detected_color))
+            
+            ratio = median/area
+            if (ratio > 0.4 and ratio < 2):
+                cv2.rectangle(original, (x1,y1), (x2,y2), labels_to_colors[detected_color], 2)
+                squares.append((x1,y1,detected_color, area))
         except:
             if debug:
                 print("something get wrong during detection !")
@@ -120,7 +126,11 @@ def get_face_colors(image, debug=False):
             if debug:
                 print("")
 
-### sort 
+    
+
+    ### sort 
+
+    
 
     squares = sorted(squares, key=lambda k: k[1])
 

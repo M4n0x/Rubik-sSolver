@@ -9,13 +9,12 @@ for filename in os.listdir(directory):
         #print(file_path, get_face_colors_from_file(file_path=file_path, debug=False))
 '''
 
-
-frame, face = get_face_colors_from_file(file_path="data\\webcam\\img_2_1332.jpg", debug=True)
+'''
+frame, face = get_face_colors_from_file(file_path="data\\webcam\\img_2_976.jpg", debug=True)
 cv2.imshow('frame', frame)
 cv2.waitKey()
-
-
 '''
+
 # VIDEO
 import cv2
 import time
@@ -32,7 +31,7 @@ while(True):
     if (time.time() > timeout):
         ret, frame = cap.read()
 
-        cv2.imwrite(f"data\\webcam\\img_2_{count}.jpg", frame)
+        #cv2.imwrite(f"data\\webcam\\img_2_{count}.jpg", frame)
         count += 1
 
         frame, faces = get_face_colors(frame, debug=False)
@@ -47,4 +46,3 @@ while(True):
 # When everything done, release the capture
 cap.release()
 cv2.destroyAllWindows()
-'''
