@@ -105,7 +105,10 @@ def get_face_colors(image, debug=False):
             x2,y2 = x1+w, y1+h
             area = w*h
 
-            list_pos.append((x1,y1,x2,y2,area))
+            TOLERANCE = 0.2
+
+            if (w/h > (1-TOLERANCE) and w/h < (1+TOLERANCE)):
+                list_pos.append((x1,y1,x2,y2,area))
 
     # get rid of the big square if any 
     if len(list_pos) > SIZE_CUBE**2:
