@@ -14,6 +14,15 @@ colors = {
     'red' : ([160, 100, 84], [179, 255, 255]),    # Red
 }
 
+labels_to_colors = {
+    'W' : (255,255,255),
+    'B' : (8,69,201),
+    'Y' : (245,224,0),
+    'O' : (245,102,0),
+    'G' : (30,255,5),
+    'R' : (255,20,20)
+}
+
 def detect_color(image, debug=False):
     for (key, (lower,upper)) in colors.items():
         # create NumPy arrays from the boundaries
@@ -111,7 +120,7 @@ def get_face_colors(image, debug=False):
     for (x1,y1,x2,y2,area) in list_pos:
         try:
             detected_color = detect_color(image[y1:y2, x1:x2], debug=debug)
-            cv2.rectangle(original, (x1,y1), (x2,y2), (0, 255, 0), 2)
+            cv2.rectangle(original, (x1,y1), (x2,y2), labels_to_colors[detected_color], 2)
             face.append(detected_color)
         except:
             if debug:
