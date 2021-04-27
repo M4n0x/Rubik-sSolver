@@ -1,21 +1,24 @@
 from Kyubi_solver import *
+from rubik_solver import utils
 import os 
+import keyboard
+from PIL import ImageFont, ImageDraw, Image
 
-'''
-directory = r'data\\1'
-for filename in os.listdir(directory):
-    if filename.endswith(".jpeg"):
-        file_path = os.path.join(directory, filename)
-        #print(file_path, get_face_colors_from_file(file_path=file_path, debug=False))
-'''
+# cube = 'wowgybwyogygybyoggrowbrgywrborwggybrbwororbwborgowryby'
 
+# print(utils.solve(cube, 'Kociemba'))
 
-frame, face = get_face_colors_from_file(file_path="data\\webcam\\img_2_1332.jpg", debug=True)
-cv2.imshow('frame', frame)
-cv2.waitKey()
+sequences = [
+    ('U', "Face U(pper) : Take yellow center with blue on the left"),
+    ('F', "Face F(ront) : go ↓ (Red center)"),
+    ('L', "Face L(eft) : go ← (Blue center)"),
+    ('D', "Face D(own) : go → ↓ White center"),
+    ('R', "Face R(ight) : go ↑ → → (Green center)"),
+    ('B', "Face B(ack) : go → (Orange center)"),
+]
 
+cube = []
 
-'''
 # VIDEO
 import cv2
 import time
@@ -24,7 +27,14 @@ cap = cv2.VideoCapture(0)
 OFFSET_TIME = 0
 timeout = time.time() + OFFSET_TIME # + OFFSET_TIME secondes
 
-count = 1
+width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+font = ImageFont.truetype("notosansjp.otf", 22)
+
+stop = False
+iter_faces = iter(sequences)
+face_id, text = next(iter_faces)
 
 while(True):
     # Capture frame-by-frame
@@ -32,19 +42,38 @@ while(True):
     if (time.time() > timeout):
         ret, frame = cap.read()
 
-        cv2.imwrite(f"data\\webcam\\img_2_{count}.jpg", frame)
-        count += 1
-
-        frame, faces = get_face_colors(frame, debug=False)
+        if not stop:
+            analyse_frame, faces = get_face_colors(frame, debug=False)
+            pil_im = Image.fromarray(analyse_frame)  
+            draw = ImageDraw.Draw(pil_im)
+            draw.text((20,20), text, font=font, )
+            
+            draw.text((20,height-50), "Press q: quit, s: stop, c: continue, v: validate", font=font)
+            cv2.imshow('frame', np.array(pil_im))
+            cv2.waitKey(1)
 
         # Display the resulting frame
-        cv2.imshow('frame', frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+
+        if keyboard.is_pressed('q'):
             break
-    
+        elif keyboard.is_pressed('s'):
+            stop = True
+        elif stop and keyboard.is_pressed('c'):
+            stop = False
+        elif stop and keyboard.is_pressed('v'):
+            stop = False
+            cube.append(faces)
+            try:
+                face_id, text = next(iter_faces)
+            except StopIteration:
+                print('no more iter')
+                break
+        
         timeout = time.time() + OFFSET_TIME # + next OFFSET_TIME secondes
+
+for face in cube:
+    print(face)
 
 # When everything done, release the capture
 cap.release()
 cv2.destroyAllWindows()
-'''
