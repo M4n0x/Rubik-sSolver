@@ -6,26 +6,27 @@
     Maxime Welcklen & Steve Mendes Reis
 '''
 
-from Kyubi_solver import *
-from rubik_solver import utils
-import os 
 import keyboard
-from PIL import ImageFont, ImageDraw, Image
+from PIL import Image, ImageDraw, ImageFont
+from rubik_solver import utils
+
+from Kyubi_solver import *
 
 sequences = [
-    ('U', "Face U(pper) : Show yellow center with blue one on your right"),
-    ('F', "Face F(ront) : go ↓ (show Red center)"),
-    ('L', "Face L(eft) : go → (show Blue center)"),
-    ('D', "Face D(own) : go ← ↓ (show White center"),
-    ('R', "Face R(ight) : go ↑ ← ← (show Green center)"),
-    ('B', "Face B(ack) : go ← (show Orange center)"),
+    ('U', "Face U(pper) : Show yellow center with blue one on your right", 'Y'),
+    ('F', "Face F(ront) : go ↓ (show Red center)", 'R'),
+    ('L', "Face L(eft) : go → (show Blue center)", 'B'),
+    ('D', "Face D(own) : go ← ↓ (show White center", 'W'),
+    ('R', "Face R(ight) : go ↑ ← ← (show Green center)", 'G'),
+    ('B', "Face B(ack) : go ← (show Orange center)", 'O'),
 ]
 
 cube = []
 
+import time
+
 # VIDEO
 import cv2
-import time
 
 cap = cv2.VideoCapture(0)
 OFFSET_TIME = 0 # allow to take an image every X secondes (set to 0 to take as many images as possible)
@@ -38,7 +39,7 @@ font = ImageFont.truetype("notosansjp.otf", 21)
 
 stop = False
 iter_faces = iter(sequences)
-face_id, text = next(iter_faces)
+face_id, text, center = next(iter_faces)
 
 while(True):
     if (time.time() > timeout):
@@ -51,23 +52,23 @@ while(True):
             draw = ImageDraw.Draw(pil_im)
             draw.text((20,20), text, font=font)
             
-            draw.text((20,height-50), "Press q: quit, s: stop, c: continue, v: validate", font=font)
+            draw.text((20,height-50), "Press q: quit, c: continue , v: validate", font=font)
             cv2.imshow('frame', np.array(pil_im))
             cv2.waitKey(1)
+
+        if len(faces) == 9 and faces[4] == center:
+            stop = True
         
         # managing key pressing
         if keyboard.is_pressed('q'):
             break
-        elif keyboard.is_pressed('s'):
-            stop = True
         elif stop and keyboard.is_pressed('c'):
             stop = False
         elif stop and keyboard.is_pressed('v'):
-            stop = False
-            print(faces)
             cube.append(faces)
             try:
-                face_id, text = next(iter_faces)
+                face_id, text, center = next(iter_faces)
+                stop = False
             except StopIteration:
                 break
         
@@ -92,3 +93,5 @@ if len(cube) == 6:
     print("cube :", str_cube)
 
     print("solution :", utils.solve(str_cube, 'Kociemba'))
+    print("You can follow the standard cube notation at : https://ruwix.com/the-rubiks-cube/notation/")
+    print("Remember : F(ront) = red center, U(pper) = yellow center and L(eft) center should be blue!")

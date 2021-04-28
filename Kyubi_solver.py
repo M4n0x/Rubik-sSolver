@@ -7,9 +7,9 @@
     Maxime Welcklen & Steve Mendes Reis
 '''
 
+import statistics as stat
 import cv2
 import numpy as np
-import statistics as stat
 from matplotlib import pyplot as plt
 
 SIZE_CUBE = 3
@@ -146,7 +146,7 @@ def get_face_colors(image, debug=False):
 
             list_pos.append((x1,y1,x2,y2,area))
 
-    # Determine the media area of all the square as we looking for 9 similars squares
+    # Determine the median area of all squares as we looking for 9 similars squares
     median = 0 if (len(list_pos)==0) else stat.median([k[4] for k in list_pos])
 
     for (x1,y1,x2,y2,area) in list_pos:
@@ -155,7 +155,7 @@ def get_face_colors(image, debug=False):
             detected_color = detect_color(image[y1:y2, x1:x2], original[y1:y2, x1:x2], debug=debug)
             
             ratio = median/area
-            if (ratio > 0.4 and ratio < 1.5):
+            if (ratio > 0.7 and ratio < 1.3):
                 cv2.rectangle(original, (x1,y1), (x2,y2), labels_to_colors[detected_color], 2) # draw colored square
                 squares.append((x1,y1,detected_color,area))
         except:
