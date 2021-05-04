@@ -88,7 +88,7 @@ Une fois ces deux transformations appliquées on obtient une image qui sera plus
 
 ![Image post-processing](assets/20210504_100359_image.png)
 
-# Trouver les carrés
+# Détection des carrés
 
 Dans cette section nous verrons comment nous avons procédé pour détecter les différents carrés présents sur notre image puis nous verrons comment extraire les différentes couleurs afin de les classifier par la suite.
 
@@ -166,7 +166,7 @@ Le résultat des différentes opérations morphologiques successives ci-dessus s
 
 ![Opérations morphologiques successives\label{morph}](assets/20210504_100414_image.png)
 
-## Détection des carrés
+## Trouver les carrés
 
 A partir de la dernière image obtenue sur la dernière morphologie, à savoir, celle-ci :
 

@@ -1,10 +1,12 @@
 ---
 title: "Kyubi - Rapport"
 author: [Mendes Reis Steve, Welcklen Maxime]
-date: "2021-05-03"
+date: \today
 subject: "Traitement d'image"
 keywords: [Morphologie, Image, Python, OpenCV, Rubiks, cube]
-subtitle: "Cours de traitement d'images"
+subtitle: | 
+          |  Cours de traitement d'images 
+          |  A l'attention de M. Tièche.
 version: 1.0.0
 lang: "fr"
 titlepage: true,
@@ -32,5 +34,6 @@ lof-title: "Liste des figures"
 codes-title: "Liste des codes"
 code-abrev: "Code"
 listingtitle: "Extrait de code"
-bibliography: biblio.bib
+bibliography: "biblio.bib"
+csl: "iso690.csl"
 ...
