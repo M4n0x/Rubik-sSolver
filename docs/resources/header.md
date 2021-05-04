@@ -11,7 +11,7 @@ version: 1.0.0
 lang: "fr"
 titlepage: true,
 titlepage-text-color: "000000"
-titlepage-rule-color: "360049"
+titlepage-rule-color: "e96913"
 titlepage-rule-height: 8
 titlepage-background: "resources/background-kyubi.pdf"
 page-background: "resources/background-pages.pdf"
@@ -35,5 +35,6 @@ codes-title: "Liste des codes"
 code-abrev: "Code"
 listingtitle: "Extrait de code"
 bibliography: "biblio.bib"
-csl: "iso690.csl"
+csl: "resources/iso690.csl"
+biblio-title: "Bibliographie"
 ...

@@ -172,7 +172,7 @@ A partir de la dernière image obtenue sur la dernière morphologie, à savoir, 
 
 ![Image obtenue après application de toutes les morphologies](assets/20210504_130708_image.png)
 
-nous allons appliquer un algorithme de détection des points de contours, nommé "Suzuki 85", à l'aide d'openCV.
+nous allons appliquer un algorithme de détection des points de contours, nommé "Suzuki 85", à l'aide d'openCV. [@contours]
 
 ```python
 cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -186,7 +186,7 @@ cv2.approxPolyDP(cnt,epsilon,True)
 
 Elle nous permettra de trouver une approximation de contours en partant des points trouvés précédemment.
 
-![Example d'approximation de contours avec epsilon = 10% et epsilon 1%](https://opencv-python-tutroals.readthedocs.io/en/latest/_images/approx.jpg)
+![Exemple d'approximation de contours avec epsilon = 10% et epsilon 1%](https://opencv-python-tutroals.readthedocs.io/en/latest/_images/approx.jpg)
 
 Comme mentionné dans la [documentation d'open CV](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_contours/py_contour_features/py_contour_features.html) cette approche permet de détecter des carrés même si leur contours ne sont pas très bien définis.
 
