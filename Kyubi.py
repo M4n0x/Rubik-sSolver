@@ -17,7 +17,7 @@ sequences = [
     ('F', "Face F(ront) : go ↓ (show Red center)", 'R'),
     ('L', "Face L(eft) : go → (show Blue center)", 'B'),
     ('D', "Face D(own) : go ← ↓ (show White center", 'W'),
-    ('R', "Face R(ight) : go ↑ ← ← (show Green center)", 'G'),
+    ('R', "Face R(ight) : go ↑ ← (show Green center)", 'G'),
     ('B', "Face B(ack) : go ← (show Orange center)", 'O'),
 ]
 
