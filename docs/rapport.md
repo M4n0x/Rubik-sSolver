@@ -172,7 +172,7 @@ A partir de la dernière image obtenue sur la dernière morphologie, à savoir, 
 
 ![Image obtenue après application de toutes les morphologies](assets/20210504_130708_image.png)
 
-nous allons appliquer un algorithme de détection des points de contours, nommé "Suzuki 85", à l'aide d'openCV. [@contours]
+nous allons appliquer un algorithme de détection des points de contours, nommé "Suzuki 85", à l'aide d'openCV.
 
 ```python
 cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)

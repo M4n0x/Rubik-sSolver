@@ -5,15 +5,16 @@ date: \today
 subject: "Traitement d'image"
 keywords: [Morphologie, Image, Python, OpenCV, Rubiks, cube]
 subtitle: | 
-          |  Cours de traitement d'images 
-          |  A l'attention de M. Tièche.
+          |  Cours de traitement d'images
+          |  A l'attention de M. Tièche
 version: 1.0.0
 lang: "fr"
-titlepage: true,
+titlepage: true
 titlepage-text-color: "000000"
 titlepage-rule-color: "e96913"
-titlepage-rule-height: 8
+titlepage-rule-height: 7
 titlepage-background: "resources/background-kyubi.pdf"
+caption-justification: centering
 page-background: "resources/background-pages.pdf"
 links-as-notes: true
 page-background-opacity: 0.8
