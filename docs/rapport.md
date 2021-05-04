@@ -22,7 +22,7 @@ Tout au long de ce document plusieurs notations concernant le cube seront utilis
 
 Dans la litérature du cube, la notation du cube est codifié de manière standard par les appelations suivantes : `U(pper), L(eft), F(front), R(ight), B(ack), D(own)` ces différentes lettres correspondent chaucune à une face du cube.
 
-![Décomposition des faces d'un rubik's cube](assets\20210503_223725_image.png)
+![Décomposition des faces d'un rubik's cube](assets/20210503_223725_image.png)
 
 Les couleurs ne sont pas fixées par rapport aux différentes lettres. Ainsi dans la suite du document et pour la résolution du rubik's cube en fin de traitement, il faudra tenir compte du fait que les mouvements de résolution seront donnés en partant du principe que la face F(ront) est la face rouge (l'élément central doit être rouge) et la face U(pper) est jaune. Une fois que ces deux éléments sont déterminés toutes les autres positions sont fixées ainsi on a que :
 
@@ -60,9 +60,9 @@ Le premier objectif de ce travail a été de constituer un dataset sur lequel tr
 
 Voici quelques exemple d'images que nous avons utilisées pour nos premières phases de test :
 
-![Face avec une couleur complète](assets\20210504_095606_image.png)
+![Face avec une couleur complète](assets/20210504_095606_image.png)
 
-![Face avec couleurs mélangées\label{colors-mixed}](assets\20210504_095703_image.png)
+![Face avec couleurs mélangées\label{colors-mixed}](assets/20210504_095703_image.png)
 
 Nous avons constitué deux datasets, dans chacun des datasets se trouve toutes les faces d'un cube mélangé de façon différente.
 
@@ -86,7 +86,7 @@ Nous avons choisi de travailler avec kernel de 13 pixels c'est, après plusieurs
 
 Une fois ces deux transformations appliquées on obtient une image qui sera plus simple à analyser pour la suite de notre travail.
 
-![Image post-processing](assets\20210504_100359_image.png)
+![Image post-processing](assets/20210504_100359_image.png)
 
 # Trouver les carrés
 
@@ -122,7 +122,7 @@ cv2.Canny(imgray,0,30)
 
 Les deux options 0 et 30 qui sont les threshold de détection de changement d'intensité ont été choisi par itération. Voici le résultat de détection des contours.
 
-![Détection des contours avec canny](assets\20210504_110710_image.png)
+![Détection des contours avec canny](assets/20210504_110710_image.png)
 
 On peut constater que nos différents carrés sont détectés mais qu'il reste des contours parasites.
 
@@ -164,13 +164,13 @@ Cette fois-ci notre kernel doit être plus grand car on cherche vraiment a élim
 
 Le résultat des différentes opérations morphologiques successives ci-dessus sont visibles sur la figure suivante
 
-![Opérations morphologiques successives\label{morph}](assets\20210504_100414_image.png)
+![Opérations morphologiques successives\label{morph}](assets/20210504_100414_image.png)
 
 ## Détection des carrés
 
 A partir de la dernière image obtenue sur la dernière morphologie, à savoir, celle-ci :
 
-![Image obtenue après application de toutes les morphologies](assets\20210504_130708_image.png)
+![Image obtenue après application de toutes les morphologies](assets/20210504_130708_image.png)
 
 nous allons appliquer un algorithme de détection des points de contours, nommé "Suzuki 85", à l'aide d'openCV.
 
@@ -212,7 +212,7 @@ Une des problématiques qui peut survenir lors de l'analyse des carrés présent
 
 Une fois que les carrés sont détectés nous avons tous les carrés dans le désordre, l'idée de cette étape est donc de trier les différents carrés pour les obtenir sous la forme raw major.
 
-![Raw major order](assets\20210504_140539_image.png)
+![Raw major order](assets/20210504_140539_image.png)
 
 Afin d'obtenir cette liste, un premier tri est effectué sur tous les carrés obtenus sur leur composante X. Puis un second tri, 3 par 3 (tri par ligne), est effectué sur leur composante Y.
 
@@ -238,7 +238,7 @@ Ces constantes correspondent au seuil bas et haut de détection d'une couleur HS
 
 On notera que le rouge possède deux entrées, ceci est explicable par le fait que la notation HSV est une roue de couleur et donc le rouge peut se trouver en début ou en fin de la plage de couleur.
 
-![Palette de couleurs HSV pour openCV](assets\20210504_141739_image.png)
+![Palette de couleurs HSV pour openCV](assets/20210504_141739_image.png)
 
 Pour la suite de notre traitement il faut donc que notre image orignale soit convertie au format HSV.
 
@@ -272,7 +272,7 @@ Nous effectuons directement une normalisation en divisant le résultat par le no
 
 Dès qu'une couleur atteint un threshold défini (par défaut 30%) on considère que la couleur a été trouvée.
 
-![Détection des différentes couleurs](assets\20210504_183641_image.png)
+![Détection des différentes couleurs](assets/20210504_183641_image.png)
 
 ##### Amélioration
 
@@ -332,11 +332,11 @@ Cette ordre est imposé par le module [rubik_solver](https://pypi.org/project/ru
 
 Afin de guider l'utilisateur dans les différentes étapes de détection, nous avons développé un scénario pour détecter les différentes faces les unes après les autres.
 
-![Scénario utilisateur](assets\20210504_152806_image.png)
+![Scénario utilisateur](assets/20210504_152806_image.png)
 
 Ces différents messages apparaitrons sur l'interface utilisateur pour le guider sur la face qu'il faut détecter.
 
-![Démarrage de l'application](assets\20210504_150731_image.png)
+![Démarrage de l'application](assets/20210504_150731_image.png)
 
 A l'ouverture de l'application le premier message apparait, il permet à l'utilisateur de savoir quelle face il doit montrer en premier.
 
@@ -361,7 +361,7 @@ Ce module impose que les faces soient données dans un ordre spécial cependant 
 
 les mouvements de résolution sont donnés sous le format standard.
 
-![Notation des différents mouvements source: https://ruwix.com/the-rubiks-cube/notation/](assets\20210504_152135_image.png)
+![Notation des différents mouvements source: https://ruwix.com/the-rubiks-cube/notation/](assets/20210504_152135_image.png)
 
 Il suffit de suivre les mouvements donnés en gardant en tête que la face F(ront) correspond à la face avec un centre rouge et la face U(pper) correspond à la face avec un centre jaune.
 
@@ -385,7 +385,7 @@ Nous avons eu l'occasion de tester l'application sur une caméra avec un grand a
 
 La détection des formes ayant 4 côtés est parfois trop permissive, il se peut que des formes, comme des trapèzoïdes soient détectés comme des carrés (il serait mieux de parler de rectancle dans ce cas) alors que ça n'a pas lieu d'être.
 
-![Exemple d'anomalie de détection](assets\20210504_172902_image.png)
+![Exemple d'anomalie de détection](assets/20210504_172902_image.png)
 
 \newpage
 
