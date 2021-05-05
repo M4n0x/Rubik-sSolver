@@ -46,7 +46,7 @@ voici les grandes étapes de conception pour la résolution de notre problémati
 * Convertion matricielle
 * Résolution du rubik's cube
 
-Les "points chauds" sont la détection  de contours et de couleurs qui sont très sensibles aux conditions dans lesquels sont menés les différents tests (condition de luminosité, type de caméra, fish eye, etc...). Il sera donc très difficile de trouver une solution qui sera assez générale pour convenir à tout type de caméra. Nous limiterons donc à l'utilisation de nos caméras intégrées à nos PC portables pour effectuer les tests ainsi que d'une bonne condition lumineuse (typiquement nous ne traitrons pas les cas de basses luminosité).
+Les "points chauds" sont la détection  de contours et de couleurs qui sont très sensibles aux conditions dans lesquelles sont menés les différents tests (condition de luminosité, type de caméra, fish eye, etc...). Il sera donc très difficile de trouver une solution qui sera assez générale pour convenir à tout type de caméra. Nous limiterons donc à l'utilisation de nos caméras intégrées à nos PC portables pour effectuer les tests ainsi que d'une bonne condition lumineuse (typiquement nous ne traitrons pas les cas de basses luminosité).
 
 \newpage
 
