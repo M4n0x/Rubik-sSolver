@@ -34,3 +34,11 @@ The first time you use the project, you have to install the dependency once.
 This step Can be done without a virtual env, but it will install the dependency in your global python installation, which can be harmfull.
 To use the virtual environnement, please create it using the step above and __be carefull that the local environnement is activated :-)__
 ```python -m pip install -r requierements```
+
+### Use Kyubi
+
+To use kyubi once you have a camera connected to your computer and have installed all dependancy above, you can just run the main script
+
+`.\kyubi.py`
+
+And let's the magic do the trick !
