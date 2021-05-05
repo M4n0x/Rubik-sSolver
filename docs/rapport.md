@@ -369,9 +369,9 @@ Une vidéo de démonstration est fournie en annexe de ce document.
 
 \newpage
 
-# Probématiques rencontrées
+# Problématiques rencontrées
 
-Cette section regroupe les différentes problématiquse restantes sur le projet Kyubi.
+Cette section regroupe les différentes problématiques restantes sur le projet Kyubi.
 
 ## Conditions luminosité
 
@@ -391,6 +391,6 @@ La détection des formes ayant 4 côtés est parfois trop permissive, il se peut
 
 # Conclusion
 
-La réalisation du projet nous a permis d'exploiter énormement d'éléments théoriques qui ont été vu en cours. Notre problématique s'appliquant très bien au cours de traitement d'image. Grâce aux différentes informations dispensés pendant les cours il nous a été facile de trouver une bonne direction à prendre pour se diriger rapidement vers une solution qui n'est pas parfaite mais qui est fonctionnel et robuste. Nous avons donc pu voir le pré-traitement d'image avec notamment l'utilisation du GaussianBlur, la segmentation d'image, les différentes opérations morphologiques, la détection de couleurs et plus encore. Ce projet a été l'occasion de mettre ensemble ces différentes techniques, que nous avions vues séparément, ensemble dans une pipeline de traitement pour obtenir un produit final.
+La réalisation du projet nous a permis d'exploiter énormement d'éléments théoriques qui ont été vu en cours. Notre problématique s'appliquant très bien au cours de traitement d'image. Grâce aux différentes informations dispensés pendant les cours il nous a été facile de trouver une bonne direction à prendre pour se diriger rapidement vers une solution qui n'est pas parfaite mais qui est fonctionnelle et robuste. Nous avons donc pu voir le pré-traitement d'image avec notamment l'utilisation du GaussianBlur, la segmentation d'image, les différentes opérations morphologiques, la détection de couleurs et plus encore. Ce projet a été l'occasion de mettre ensemble ces différentes techniques, que nous avions vues séparément, ensemble dans une pipeline de traitement pour obtenir un produit final.
 
 Nous avons aussi pu constater à quel point nous sommes très dépendant des conditions de prise d'images et qu'il est très difficile d'obtenir un produit qui puisse bien réagir sous toutes les conditions.
