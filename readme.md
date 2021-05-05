@@ -37,7 +37,7 @@ To use the virtual environnement, please create it using the step above and __be
 
 ### Use Kyubi
 
-To use kyubi once you have a camera connected to your computer and have installed all dependancy above, you can just run the main script
+To use kyubi once you have a camera connected to your computer and have installed all dependancies above, you can just run the main script
 
 `.\kyubi.py`
 
